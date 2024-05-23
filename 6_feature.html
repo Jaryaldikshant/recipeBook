@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Categories</title>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e8e9ea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            background-color: #dae2e5;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #00A36C;
+            font-family: "Lato", sans-serif;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        h1:hover {
+            color: #0b3953;
+            text-decoration: underline;
+        }
+
+        .categories {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: "Lato", sans-serif;
+        }
+
+        .category {
+            flex-direction: column;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-family: "Lato", sans-serif;
+            color: #0b3953;
+            font-size: 18px;
+        }
+
+        .category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            color: #00A36C;
+        }
+
+        .category img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .category:hover img {
+            transform: scale(1.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .recipes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-gap: 20px;
+            color: #0b3953;
+        }
+
+        .recipe {
+            cursor: pointer;
+        }
+
+        .recipe-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .recipe-image:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .category img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .recipe-image {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .category img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .recipe-image {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Recipe Categories</h1>
+
+        <div class="categories">
+
+            <button class="category" data-category="breakfast">
+                <img src="/Main Images/breakfast.jpg" alt="Breakfast">
+                <p>Breakfast</p>
+            </button>
+
+            <button class="category" data-category="lunch">
+                <img src="/Main Images/lunch.jpg" alt="Lunch">
+                <p>Lunch</p>
+            </button>
+
+            <button class="category" data-category="dinner">
+                <img src="/Main Images/dinner.jpg" alt="Dinner">
+                <p>Dinner</p>
+            </button>
+
+            <button class="category" data-category="desserts">
+                <img src="/Main Images/desserts.jpg" alt="Desserts">
+                <p>Desserts</p>
+            </button>
+
+            <button class="category" data-category="drinks">
+                <img src="/Main Images/drinks.jpg" alt="Drinks">
+                <p>Drinks</p>
+            </button>
+            
+        </div>
+        <div class="recipes"></div>
+    </div>
+
+
+    <script>
+
+        const recipes = {
+            breakfast: [
+                "Omelette",
+                "Pancakes",
+                "French Toast"
+            ],
+            lunch: [
+                "Sandwich",
+                "Salad",
+                "Soup"
+            ],
+            dinner: [
+                "Pasta",
+                "Spaghetti Bolognese",
+                "Stir-Fry"
+            ],
+            desserts: [
+                "Chocolate Cake",
+                "Apple Pie",
+                "Ice Cream"
+            ],
+            drinks: [
+                "Smoothie",
+                "Mojito",
+                "Coffee"
+            ]
+        };
+
+      
+
+        const recipesContainer = document.querySelector('.recipes');
+
+
+     
+        
+        document.querySelector('.categories').addEventListener('click', (event) => {
+
+
+            
+            if (event.target.classList.contains('category')) {
+
+ 
+                const category = event.target.dataset.category;
+
+
+                
+                const categoryRecipes = recipes[category];
+
+
+  
+                
+                recipesContainer.innerHTML = '';
+
+
+
+                
+                categoryRecipes.forEach(recipeName => {
+
+  
+                    
+                    const recipeElement = document.createElement('div');
+                    recipeElement.classList.add('recipe');
+
+                    
+                    const recipeImage = document.createElement('img');
+                    recipeImage.classList.add('recipe-image');
+
+
+                    recipeImage.src = `images/${recipeName.toLowerCase().replace(/\s+/g, '-')}.jpg`;
+
+            
+                           
+                    recipeImage.alt = recipeName;
+
+                    const recipeTitle = document.createElement('h3');
+
+                    recipeTitle.textContent = recipeName;
+
+                    const recipeDescription = document.createElement('p');
+
+                    recipeDescription.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et felis sed nunc venenatis tempor. Integer non velit at arcu mollis congue.";
+
+
+                    
+                    recipeElement.appendChild(recipeImage);
+                    recipeElement.appendChild(recipeTitle);
+                    recipeElement.appendChild(recipeDescription);
+
+
+                    
+                    recipesContainer.appendChild(recipeElement);
+                });
+            }
+        });
+
+    </script>
+</body>
+
+</html>
