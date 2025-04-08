@@ -251,4 +251,70 @@ nav {
     .recipes {
         grid-template-columns: 1fr;
     }
+}
+
+.contact-section {
+  padding: 2rem;
+  text-align: center;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin: 1rem;
+}
+
+.contact-section h3 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.contact-info {
+  margin-bottom: 1.5rem;
+}
+
+.contact-info p {
+  margin: 0.8rem 0;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.contact-info i {
+  margin-right: 10px;
+  color: #007bff;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.social-links a {
+  color: #666;
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #007bff;
+}
+
+.footer {
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+.leftfoot {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.right {
+  margin-top: 0.5rem;
+}
+
+.name {
+  font-weight: bold;
 } 
