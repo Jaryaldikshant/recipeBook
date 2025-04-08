@@ -43,9 +43,6 @@ Installation
 
 Certainly! User can:
 
-    Creating an Account:
-        Click "Sign Up" to register with username, email, and password.
-
     Exploring Recipes:
         Browse recipes by category: breakfast, lunch, dinner, etc.
 
