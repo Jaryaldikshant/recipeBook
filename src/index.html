@@ -584,33 +584,151 @@
 
 
   <div class="feet" id="footer">
-    <div class="contact-section">
-      <h3>Contact Us</h3>
-      <div class="contact-info">
-        <p><i class="fas fa-envelope"></i> Email: info@rebook.com</p>
-        <p><i class="fas fa-phone"></i> Phone: +1 (123) 456-7890</p>
-        <p><i class="fas fa-map-marker-alt"></i> Address: 123 Recipe Street, Foodville, FC 12345</p>
+    <div class="container">
+      <div class="contact-section">
+        <h3>Contact Us</h3>
+        <div class="contact-info">
+          <p><i class="fas fa-envelope"></i> Email: info@rebook.com</p>
+          <p><i class="fas fa-phone"></i> Phone: +1 (123) 456-7890</p>
+          <p><i class="fas fa-map-marker-alt"></i> Address: 123 Recipe Street, Foodville, FC 12345</p>
+        </div>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
       </div>
-      <div class="social-links">
-        <a href="#"><i class="fab fa-facebook"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
+      <div class="footer-content">
+        <div class="leftfoot">@ 2024 ReBook Co. Pty Ltd</div>
+        <div class="right">
+          <div class="name">Dikshant Jaryal</div>
+        </div>
       </div>
-    </div>
-    <div class="leftfoot">@ 2024 ReBook Co. Pty Ltd</div>
-    <div class="right">
-      <div class="name">Dikshant Jaryal</div>
     </div>
   </div>
 
   <script>
     function scrollToFooter() {
       const footer = document.getElementById('footer');
-      footer.scrollIntoView({ behavior: 'smooth' });
+      if (footer) {
+        footer.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
     }
   </script>
 
+  <div class="categories">
+    <button class="category" onclick="filterRecipes('all')">
+      <img src="./images/breakfast.jpg" alt="All Recipes">
+      <p>All Recipes</p>
+    </button>
+    <button class="category" onclick="filterRecipes('breakfast')">
+      <img src="./images/breakfast.jpg" alt="Breakfast">
+      <p>Breakfast</p>
+    </button>
+    <button class="category" onclick="filterRecipes('lunch')">
+      <img src="./images/lunch.jpg" alt="Lunch">
+      <p>Lunch</p>
+    </button>
+    <button class="category" onclick="filterRecipes('dinner')">
+      <img src="./images/dinner.jpg" alt="Dinner">
+      <p>Dinner</p>
+    </button>
+    <button class="category" onclick="filterRecipes('desserts')">
+      <img src="./images/desserts.jpg" alt="Desserts">
+      <p>Desserts</p>
+    </button>
+  </div>
+
+  <div class="recipes">
+    <!-- Breakfast Recipes -->
+    <div class="recipe-card" data-category="breakfast">
+      <img src="./images/Pancakes.jpg" alt="Pancakes">
+      <div class="recipe-info">
+        <h3>Fluffy Pancakes</h3>
+        <p>Start your day with these perfect fluffy pancakes</p>
+        <a href="#" class="view-recipe">View Recipe</a>
+      </div>
+    </div>
+    <div class="recipe-card" data-category="breakfast">
+      <img src="./images/French-Toast.jpg" alt="French Toast">
+      <div class="recipe-info">
+        <h3>Classic French Toast</h3>
+        <p>A breakfast classic that never disappoints</p>
+        <a href="#" class="view-recipe">View Recipe</a>
+      </div>
+    </div>
+
+    <!-- Lunch Recipes -->
+    <div class="recipe-card" data-category="lunch">
+      <img src="./images/Sandwich.jpg" alt="Sandwich">
+      <div class="recipe-info">
+        <h3>Gourmet Sandwich</h3>
+        <p>A perfect lunchtime treat</p>
+        <a href="#" class="view-recipe">View Recipe</a>
+      </div>
+    </div>
+    <div class="recipe-card" data-category="lunch">
+      <img src="./images/Salad.jpg" alt="Salad">
+      <div class="recipe-info">
+        <h3>Fresh Garden Salad</h3>
+        <p>Healthy and refreshing lunch option</p>
+        <a href="#" class="view-recipe">View Recipe</a>
+      </div>
+    </div>
+
+    <!-- Dinner Recipes -->
+    <div class="recipe-card" data-category="dinner">
+      <img src="./images/Spaghetti-Bolognese.jpg" alt="Spaghetti Bolognese">
+      <div class="recipe-info">
+        <h3>Spaghetti Bolognese</h3>
+        <p>A hearty Italian classic</p>
+        <a href="#" class="view-recipe">View Recipe</a>
+      </div>
+    </div>
+    <div class="recipe-card" data-category="dinner">
+      <img src="./images/Stir-Fry.jpg" alt="Stir Fry">
+      <div class="recipe-info">
+        <h3>Vegetable Stir Fry</h3>
+        <p>Quick and healthy dinner option</p>
+        <a href="#" class="view-recipe">View Recipe</a>
+      </div>
+    </div>
+
+    <!-- Dessert Recipes -->
+    <div class="recipe-card" data-category="desserts">
+      <img src="./images/Chocolate-Cake.jpg" alt="Chocolate Cake">
+      <div class="recipe-info">
+        <h3>Chocolate Cake</h3>
+        <p>Rich and decadent dessert</p>
+        <a href="#" class="view-recipe">View Recipe</a>
+      </div>
+    </div>
+    <div class="recipe-card" data-category="desserts">
+      <img src="./images/Ice-Cream.jpg" alt="Ice Cream">
+      <div class="recipe-info">
+        <h3>Homemade Ice Cream</h3>
+        <p>A sweet treat for any occasion</p>
+        <a href="#" class="view-recipe">View Recipe</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function filterRecipes(category) {
+      const recipes = document.querySelectorAll('.recipe-card');
+      recipes.forEach(recipe => {
+        if (category === 'all' || recipe.dataset.category === category) {
+          recipe.style.display = 'block';
+        } else {
+          recipe.style.display = 'none';
+        }
+      });
+    }
+  </script>
 
 </body>
 
