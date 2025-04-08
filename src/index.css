@@ -121,36 +121,41 @@ nav {
 }
 
 /* Image styles */
-.img1, .img2, .img3, .img4, .img5 {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.img1,
+.img2,
+.img3,
+.img4,
+.img5 {
     position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .img1 {
-    background-image: url(images/5.jpg);
+    background-image: url('./images/5.jpg');
     min-height: 100%;
     min-width: 100%;
 }
 
 .img2 {
-    background-image: url(images/7.jpg);
+    background-image: url('./images/7.jpg');
     min-height: 600px;
 }
 
 .img3 {
-    background-image: url(images/18.jpg);
+    background-image: url('./images/18.jpg');
     min-height: 700px;
 }
 
 .img4 {
-    background-image: url(images/17.jpg);
+    background-image: url('./images/17.jpg');
     min-height: 600px;
 }
 
 .img5 {
-    background-image: url(images/3.jpg);
+    background-image: url('./images/3.jpg');
     min-height: 600px;
 }
 
