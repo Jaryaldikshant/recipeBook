@@ -36,18 +36,18 @@
 
         .categories {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
         .category {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             background-color: white;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
@@ -60,11 +60,11 @@
         }
 
         .category img {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
             transition: transform 0.3s;
         }
 
@@ -73,7 +73,7 @@
         }
 
         .category p {
-            font-size: 18px;
+            font-size: 16px;
             color: #0b3953;
             margin: 0;
             font-weight: 500;
@@ -81,17 +81,23 @@
 
         .recipes {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
         }
 
         .recipe {
             background: white;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 10px;
+            max-width: 220px;
+            margin: 0 auto;
         }
 
         .recipe:hover {
@@ -101,37 +107,42 @@
 
         .recipe-image {
             width: 100%;
-            height: 200px;
+            height: 140px;
             object-fit: cover;
         }
 
         .recipe p {
-            padding: 15px;
+            padding: 10px;
             margin: 0;
             text-align: center;
             color: #0b3953;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
         }
 
         @media screen and (max-width: 768px) {
             .container {
-                padding: 20px;
+                padding: 15px;
             }
 
             .categories {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                gap: 15px;
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 10px;
             }
 
             .category img {
-                width: 120px;
-                height: 120px;
+                width: 100px;
+                height: 100px;
             }
 
             .recipes {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 20px;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 15px;
             }
         }
 
@@ -141,13 +152,93 @@
             }
 
             .category img {
-                width: 100px;
-                height: 100px;
+                width: 80px;
+                height: 80px;
             }
 
             .recipes {
                 grid-template-columns: 1fr;
             }
+        }
+
+        .view-recipe {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #00A36C;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 5px;
+            transition: background-color 0.3s;
+            font-size: 12px;
+        }
+        
+        .view-recipe:hover {
+            background-color: #0b3953;
+        }
+        
+        /* Modal styles */
+        .recipe-modal {
+            display: flex;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .close-btn:hover {
+            color: #000;
+        }
+        
+        .recipe-description {
+            font-style: italic;
+            margin-bottom: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        h3 {
+            color: #00A36C;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        li {
+            margin-bottom: 6px;
+            line-height: 1.4;
         }
     </style>
 </head>
@@ -193,29 +284,189 @@
     <script>
         const recipes = {
             breakfast: [
-                "Omelette",
-                "Pancakes",
-                "French Toast"
+                {
+                    name: "Omelette",
+                    description: "A fluffy and delicious omelette perfect for breakfast",
+                    ingredients: ["3 eggs", "1/4 cup milk", "Salt and pepper to taste", "1 tbsp butter", "Optional fillings: cheese, vegetables, ham"],
+                    instructions: ["Whisk eggs, milk, salt, and pepper in a bowl", "Heat butter in a non-stick pan over medium heat", "Pour egg mixture into the pan", "Cook until edges are set, then add fillings", "Fold omelette in half and serve"],
+                    imageUrl: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Pancakes",
+                    description: "Fluffy pancakes that are perfect for any morning",
+                    ingredients: ["1 1/2 cups all-purpose flour", "3 1/2 tsp baking powder", "1/4 tsp salt", "1 tbsp sugar", "1 1/4 cups milk", "1 egg", "3 tbsp melted butter"],
+                    instructions: ["Mix dry ingredients in a bowl", "Whisk wet ingredients in another bowl", "Combine wet and dry ingredients", "Heat a griddle or pan over medium heat", "Pour batter and cook until bubbles form", "Flip and cook the other side"],
+                    imageUrl: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "French Toast",
+                    description: "Classic French toast with a golden crust",
+                    ingredients: ["6 thick slices of bread", "2 eggs", "2/3 cup milk", "1 tsp vanilla extract", "1/4 tsp ground cinnamon", "Salt to taste", "Butter for frying"],
+                    instructions: ["Whisk eggs, milk, vanilla, cinnamon, and salt", "Dip bread slices in the mixture", "Heat butter in a pan over medium heat", "Cook bread until golden brown on both sides", "Serve with maple syrup and fresh fruit"],
+                    imageUrl: "https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Avocado Toast",
+                    description: "Healthy and trendy avocado toast",
+                    ingredients: ["2 slices of bread", "1 ripe avocado", "1 lemon", "Salt and pepper to taste", "Red pepper flakes", "Optional: poached egg, microgreens"],
+                    instructions: ["Toast bread until golden brown", "Mash avocado with lemon juice, salt, and pepper", "Spread avocado mixture on toast", "Top with red pepper flakes and optional toppings", "Serve immediately"],
+                    imageUrl: "https://images.unsplash.com/photo-1588137378633-dea1336ce1e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Breakfast Burrito",
+                    description: "Filling breakfast burrito with eggs and vegetables",
+                    ingredients: ["4 large eggs", "2 large flour tortillas", "1/2 cup black beans", "1/2 cup shredded cheese", "1/4 cup salsa", "1 avocado, sliced", "Salt and pepper to taste"],
+                    instructions: ["Scramble eggs with salt and pepper", "Warm tortillas in a dry pan", "Layer eggs, beans, cheese, salsa, and avocado on tortillas", "Roll up tightly", "Serve with additional salsa if desired"],
+                    imageUrl: "https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                }
             ],
             lunch: [
-                "Sandwich",
-                "Salad",
-                "Soup"
+                {
+                    name: "Sandwich",
+                    description: "A hearty sandwich perfect for lunch",
+                    ingredients: ["2 slices of bread", "Mayonnaise", "Lettuce", "Tomato", "Cucumber", "Cheese", "Your choice of protein (turkey, ham, etc.)"],
+                    instructions: ["Toast bread if desired", "Spread mayonnaise on both slices", "Layer lettuce, tomato, cucumber, cheese, and protein", "Close sandwich and cut diagonally", "Serve with chips or a side salad"],
+                    imageUrl: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Salad",
+                    description: "Fresh and healthy garden salad",
+                    ingredients: ["Mixed salad greens", "Cherry tomatoes", "Cucumber", "Red onion", "Olives", "Feta cheese", "Balsamic vinaigrette"],
+                    instructions: ["Wash and dry all vegetables", "Chop vegetables into bite-sized pieces", "Combine in a large bowl", "Add olives and crumbled feta", "Drizzle with balsamic vinaigrette", "Toss gently and serve"],
+                    imageUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Soup",
+                    description: "Comforting soup for any day",
+                    ingredients: ["2 tbsp olive oil", "1 onion, diced", "2 carrots, diced", "2 celery stalks, diced", "4 cups vegetable broth", "1 cup diced tomatoes", "1 cup pasta or rice", "Salt and pepper to taste"],
+                    instructions: ["Heat oil in a large pot over medium heat", "Sauté onion, carrots, and celery until softened", "Add broth and bring to a boil", "Add tomatoes and pasta/rice", "Simmer until pasta/rice is cooked", "Season with salt and pepper"],
+                    imageUrl: "https://images.unsplash.com/photo-1546833998-877b37c2e5c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Quinoa Bowl",
+                    description: "Nutritious quinoa bowl with vegetables",
+                    ingredients: ["1 cup quinoa", "2 cups water", "1 cup chickpeas", "1 avocado, diced", "1 cup cherry tomatoes, halved", "1 cucumber, diced", "1/4 cup olive oil", "1 lemon, juiced", "Salt and pepper to taste"],
+                    instructions: ["Cook quinoa in water according to package instructions", "Let cool completely", "Combine quinoa with chickpeas, avocado, tomatoes, and cucumber", "Drizzle with olive oil and lemon juice", "Season with salt and pepper", "Toss gently and serve"],
+                    imageUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Wrap",
+                    description: "Fresh and portable lunch wrap",
+                    ingredients: ["1 large tortilla", "2 tbsp hummus", "1/2 cup mixed greens", "1/4 cup shredded carrots", "1/4 cup sliced cucumber", "1/4 cup sliced bell peppers", "1/4 cup protein of choice (chicken, tofu, etc.)"],
+                    instructions: ["Warm tortilla slightly", "Spread hummus in the center", "Layer greens, carrots, cucumber, bell peppers, and protein", "Fold in the sides and roll tightly", "Cut diagonally and serve"],
+                    imageUrl: "https://images.unsplash.com/photo-1540713434306-58505cf1b6fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                }
             ],
             dinner: [
-                "Pasta",
-                "Spaghetti Bolognese",
-                "Stir-Fry"
+                {
+                    name: "Pasta",
+                    description: "Classic pasta with tomato sauce",
+                    ingredients: ["1 lb pasta", "2 tbsp olive oil", "3 cloves garlic, minced", "1 can crushed tomatoes", "1 tsp dried basil", "1 tsp dried oregano", "Salt and pepper to taste", "Parmesan cheese for serving"],
+                    instructions: ["Cook pasta according to package instructions", "Heat oil in a large pan over medium heat", "Sauté garlic until fragrant", "Add tomatoes and herbs", "Simmer for 15-20 minutes", "Toss with cooked pasta", "Serve with parmesan cheese"],
+                    imageUrl: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Spaghetti Bolognese",
+                    description: "Hearty Italian classic with meat sauce",
+                    ingredients: ["1 lb spaghetti", "1 lb ground beef", "1 onion, diced", "2 cloves garlic, minced", "1 can crushed tomatoes", "1 can tomato paste", "1 tsp dried basil", "1 tsp dried oregano", "Salt and pepper to taste"],
+                    instructions: ["Cook spaghetti according to package instructions", "Brown beef in a large pan over medium heat", "Add onion and garlic, cook until softened", "Add tomatoes, tomato paste, and herbs", "Simmer for 30 minutes", "Serve sauce over spaghetti"],
+                    imageUrl: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Stir-Fry",
+                    description: "Quick and healthy vegetable stir-fry",
+                    ingredients: ["2 tbsp oil", "1 onion, sliced", "2 cloves garlic, minced", "1-inch ginger, minced", "Assorted vegetables (broccoli, carrots, bell peppers, etc.)", "3 tbsp soy sauce", "1 tbsp cornstarch mixed with 2 tbsp water", "Salt and pepper to taste"],
+                    instructions: ["Heat oil in a wok or large pan over high heat", "Add onion, garlic, and ginger, stir-fry for 1 minute", "Add vegetables and stir-fry for 3-5 minutes", "Add soy sauce and cornstarch mixture", "Cook until sauce thickens", "Serve over rice"],
+                    imageUrl: "https://images.unsplash.com/photo-1512058564366-18510be2db19?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Grilled Salmon",
+                    description: "Healthy grilled salmon with herbs",
+                    ingredients: ["4 salmon fillets", "2 tbsp olive oil", "2 cloves garlic, minced", "1 lemon, juiced", "1 tbsp fresh dill, chopped", "1 tbsp fresh parsley, chopped", "Salt and pepper to taste"],
+                    instructions: ["Preheat grill to medium-high heat", "Mix olive oil, garlic, lemon juice, herbs, salt, and pepper", "Brush mixture over salmon", "Grill salmon for 4-5 minutes per side", "Serve with lemon wedges and additional herbs"],
+                    imageUrl: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Chicken Curry",
+                    description: "Spicy and flavorful chicken curry",
+                    ingredients: ["1 lb chicken thighs, cut into chunks", "2 tbsp oil", "1 onion, diced", "3 cloves garlic, minced", "1-inch ginger, minced", "2 tbsp curry powder", "1 can coconut milk", "1 cup chicken broth", "Salt and pepper to taste"],
+                    instructions: ["Heat oil in a large pan over medium heat", "Brown chicken in batches, remove and set aside", "Sauté onion, garlic, and ginger until softened", "Add curry powder and cook for 1 minute", "Add coconut milk and broth, bring to a simmer", "Return chicken to pan and simmer for 20 minutes", "Season with salt and pepper", "Serve over rice"],
+                    imageUrl: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                }
             ],
             desserts: [
-                "Chocolate Cake",
-                "Apple Pie",
-                "Ice Cream"
+                {
+                    name: "Chocolate Cake",
+                    description: "Rich and decadent chocolate cake",
+                    ingredients: ["2 cups all-purpose flour", "2 cups sugar", "3/4 cup unsweetened cocoa powder", "2 tsp baking soda", "1 tsp salt", "1 cup milk", "1/2 cup vegetable oil", "2 eggs", "2 tsp vanilla extract", "1 cup boiling water"],
+                    instructions: ["Preheat oven to 350°F and grease cake pans", "Mix dry ingredients in a large bowl", "Add wet ingredients and mix well", "Stir in boiling water", "Pour into prepared pans", "Bake for 30-35 minutes", "Cool completely before frosting"],
+                    imageUrl: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Apple Pie",
+                    description: "Classic apple pie with a flaky crust",
+                    ingredients: ["6-8 apples, peeled and sliced", "1 cup sugar", "1 tsp cinnamon", "1/4 tsp nutmeg", "2 tbsp flour", "2 pie crusts", "1 egg, beaten", "1 tbsp sugar for sprinkling"],
+                    instructions: ["Preheat oven to 375°F", "Mix apples with sugar, spices, and flour", "Roll out bottom crust and place in pie dish", "Fill with apple mixture", "Roll out top crust and place over filling", "Brush with beaten egg and sprinkle with sugar", "Bake for 45-50 minutes"],
+                    imageUrl: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Ice Cream",
+                    description: "Homemade vanilla ice cream",
+                    ingredients: ["2 cups heavy cream", "1 cup whole milk", "3/4 cup sugar", "1 vanilla bean or 1 tsp vanilla extract", "4 egg yolks"],
+                    instructions: ["Heat cream, milk, and half the sugar until steaming", "Whisk egg yolks with remaining sugar", "Temper egg mixture with hot cream", "Cook until thickened", "Strain and chill completely", "Churn in ice cream maker according to manufacturer's instructions"],
+                    imageUrl: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Cheesecake",
+                    description: "Creamy and smooth cheesecake",
+                    ingredients: ["1 1/2 cups graham cracker crumbs", "1/3 cup sugar", "1/3 cup melted butter", "3 (8 oz) packages cream cheese, softened", "1 cup sugar", "3 eggs", "1 cup sour cream", "1 tsp vanilla extract"],
+                    instructions: ["Preheat oven to 350°F", "Mix graham cracker crumbs, sugar, and butter", "Press into bottom of springform pan", "Beat cream cheese and sugar until smooth", "Add eggs one at a time, beating well after each addition", "Stir in sour cream and vanilla", "Pour over crust", "Bake for 1 hour", "Turn off oven and let cool in oven for 1 hour", "Refrigerate for at least 4 hours"],
+                    imageUrl: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Brownies",
+                    description: "Fudgy chocolate brownies",
+                    ingredients: ["1/2 cup butter, melted", "1 cup sugar", "2 eggs", "1 tsp vanilla extract", "1/3 cup unsweetened cocoa powder", "1/2 cup all-purpose flour", "1/4 tsp salt", "1/4 tsp baking powder"],
+                    instructions: ["Preheat oven to 350°F and grease an 8-inch square pan", "Mix melted butter, sugar, eggs, and vanilla", "Stir in cocoa powder, flour, salt, and baking powder", "Spread batter into prepared pan", "Bake for 25-30 minutes", "Cool completely before cutting"],
+                    imageUrl: "https://images.unsplash.com/photo-1564355808539-22fda35bed7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                }
             ],
             drinks: [
-                "Smoothie",
-                "Mojito",
-                "Coffee"
+                {
+                    name: "Smoothie",
+                    description: "Healthy and refreshing fruit smoothie",
+                    ingredients: ["1 banana", "1 cup mixed berries", "1/2 cup yogurt", "1/2 cup milk or juice", "1 tbsp honey", "Ice cubes"],
+                    instructions: ["Place all ingredients in a blender", "Blend until smooth and creamy", "Pour into a glass and serve immediately"],
+                    imageUrl: "https://images.unsplash.com/photo-1502741224143-90386d7f8c82?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Mojito",
+                    description: "Refreshing mint mojito cocktail",
+                    ingredients: ["2 oz white rum", "1 oz fresh lime juice", "2 tsp sugar", "6-8 fresh mint leaves", "Soda water", "Ice"],
+                    instructions: ["Muddle mint leaves with sugar and lime juice", "Add rum and ice", "Top with soda water", "Garnish with mint leaves and lime wedge"],
+                    imageUrl: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Coffee",
+                    description: "Perfect cup of coffee",
+                    ingredients: ["2 tbsp ground coffee", "6 oz water", "Optional: milk, cream, sugar"],
+                    instructions: ["Heat water to just below boiling", "Place coffee in filter", "Pour hot water over coffee", "Let steep for 4-5 minutes", "Add milk, cream, or sugar if desired"],
+                    imageUrl: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Lemonade",
+                    description: "Fresh and tangy homemade lemonade",
+                    ingredients: ["6 lemons", "1 cup sugar", "6 cups water", "Ice", "Optional: mint leaves for garnish"],
+                    instructions: ["Juice lemons to get about 1 cup of juice", "In a pitcher, combine lemon juice, sugar, and water", "Stir until sugar is dissolved", "Add ice and optional mint leaves", "Serve immediately"],
+                    imageUrl: "https://images.unsplash.com/photo-1621263764928-df1444c5e859?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    name: "Hot Chocolate",
+                    description: "Rich and creamy hot chocolate",
+                    ingredients: ["2 cups milk", "2 tbsp unsweetened cocoa powder", "2 tbsp sugar", "1/4 tsp vanilla extract", "Optional: whipped cream, marshmallows"],
+                    instructions: ["Heat milk in a saucepan over medium heat", "Whisk in cocoa powder and sugar", "Cook until hot but not boiling", "Remove from heat and stir in vanilla", "Pour into mugs and top with whipped cream or marshmallows if desired"],
+                    imageUrl: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                }
             ]
         };
 
@@ -247,21 +498,113 @@
                 // Create recipe image
                 const recipeImage = document.createElement('img');
                 recipeImage.className = 'recipe-image';
-                recipeImage.src = `images/${recipe.toLowerCase().replace(/\s+/g, '-')}.jpg`;
-                recipeImage.alt = recipe;
+                
+                // Use the imageUrl if available, otherwise try to use local image
+                if (recipe.imageUrl) {
+                    recipeImage.src = recipe.imageUrl;
+                } else {
+                    recipeImage.src = `images/${recipe.name.toLowerCase().replace(/\s+/g, '-')}.jpg`;
+                }
+                
+                recipeImage.alt = recipe.name;
                 
                 // Create recipe name
                 const recipeName = document.createElement('p');
-                recipeName.textContent = recipe;
+                recipeName.textContent = recipe.name;
                 
-                // Append elements
+                // Create view recipe button
+                const viewButton = document.createElement('a');
+                viewButton.href = '#';
+                viewButton.className = 'view-recipe';
+                viewButton.textContent = 'View Recipe';
+                viewButton.onclick = function(e) {
+                    e.preventDefault();
+                    showRecipeDetails(recipe);
+                };
+                
+                // Append elements to recipe
                 recipeElement.appendChild(recipeImage);
                 recipeElement.appendChild(recipeName);
+                recipeElement.appendChild(viewButton);
+                
+                // Append recipe to container
                 recipesContainer.appendChild(recipeElement);
             });
         }
-
-        // Display breakfast recipes by default
+        
+        // Function to show recipe details
+        function showRecipeDetails(recipe) {
+            // Create modal container
+            const modal = document.createElement('div');
+            modal.className = 'recipe-modal';
+            
+            // Create modal content
+            const modalContent = document.createElement('div');
+            modalContent.className = 'modal-content';
+            
+            // Create close button
+            const closeBtn = document.createElement('span');
+            closeBtn.className = 'close-btn';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.onclick = function() {
+                document.body.removeChild(modal);
+            };
+            
+            // Create recipe title
+            const title = document.createElement('h2');
+            title.textContent = recipe.name;
+            
+            // Create recipe description
+            const description = document.createElement('p');
+            description.className = 'recipe-description';
+            description.textContent = recipe.description;
+            
+            // Create ingredients section
+            const ingredientsTitle = document.createElement('h3');
+            ingredientsTitle.textContent = 'Ingredients:';
+            
+            const ingredientsList = document.createElement('ul');
+            recipe.ingredients.forEach(ingredient => {
+                const li = document.createElement('li');
+                li.textContent = ingredient;
+                ingredientsList.appendChild(li);
+            });
+            
+            // Create instructions section
+            const instructionsTitle = document.createElement('h3');
+            instructionsTitle.textContent = 'Instructions:';
+            
+            const instructionsList = document.createElement('ol');
+            recipe.instructions.forEach(instruction => {
+                const li = document.createElement('li');
+                li.textContent = instruction;
+                instructionsList.appendChild(li);
+            });
+            
+            // Append all elements to modal content
+            modalContent.appendChild(closeBtn);
+            modalContent.appendChild(title);
+            modalContent.appendChild(description);
+            modalContent.appendChild(ingredientsTitle);
+            modalContent.appendChild(ingredientsList);
+            modalContent.appendChild(instructionsTitle);
+            modalContent.appendChild(instructionsList);
+            
+            // Append modal content to modal
+            modal.appendChild(modalContent);
+            
+            // Append modal to body
+            document.body.appendChild(modal);
+            
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                if (event.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            };
+        }
+        
+        // Display breakfast recipes initially
         displayRecipes('breakfast');
     </script>
 </body>

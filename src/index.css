@@ -284,6 +284,8 @@ nav {
   padding: 2rem 0;
   margin-top: 2rem;
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .container {
